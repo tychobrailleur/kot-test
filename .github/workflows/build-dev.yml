@@ -3,7 +3,7 @@ name: Automated DEV Release
 on:
   push:
     branches:
-      - "master"
+      - "main"
       - "release/**"
 
 jobs:

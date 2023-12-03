@@ -40,6 +40,16 @@ jobs:
           tag_name: ${{ steps.read_version_properties.outputs.tag }}
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+      - name: Create tag
+        uses: actions/github-script@v5
+        with:
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/dev',
+              sha: context.sha
+            })
       - name: Create a Release
         uses: softprops/action-gh-release@v1
         env:

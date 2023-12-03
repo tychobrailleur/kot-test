@@ -27,6 +27,12 @@ jobs:
         run: ./gradlew build -x test
         env:
           RUN_NUMBER: ${{ github.run_number }}
+      - name: Read version properties
+        id: read_version_properties
+        uses: christian-draeger/read-properties@1.1.1
+        with:
+          path: 'version.properties'
+          properties: 'version shortVersion tag branch'
       - name: Delete previous tag and release
         uses: ClementTsang/delete-tag-and-release@v0.3.1
         with:

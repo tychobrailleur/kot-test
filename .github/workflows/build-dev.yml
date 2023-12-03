@@ -26,9 +26,6 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build -x test
         env:
-          INSTALL4J_HOME: /opt/install4j10
-          INSTALL4J_LICENSE: ${{ secrets.INSTALL4J_LICENSE }}
-          POEDITOR_APIKEY: ${{ secrets.POEDITOR_APIKEY }}
           RUN_NUMBER: ${{ github.run_number }}
       - name: Delete previous tag and release
         uses: ClementTsang/delete-tag-and-release@v0.3.1

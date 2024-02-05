@@ -65,12 +65,17 @@ jobs:
           draft: true
           prerelease: true
       - name: Publish Release
-        run: |
-          curl --request PATCH \
-          --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-          --header 'Content-type: application/json' \
-          --header 'User-Agent: Github-Action' \
-          --url https://api.github.com/repos/tychobrailleur/kot-test/releases/${{ steps.create_release.outputs.id }} \
-          --data '{ "draft": false }'
+        uses: tychobrailleur/publish-action@0.1.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release: https://api.github.com/repos/tychobrailleur/kot-test/releases/${{ steps.create_release.outputs.id }}
+      # - name: Publish Release
+      #   run: |
+      #     curl --request PATCH \
+      #     --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+      #     --header 'Content-type: application/json' \
+      #     --header 'User-Agent: Github-Action' \
+      #     --url https://api.github.com/repos/tychobrailleur/kot-test/releases/${{ steps.create_release.outputs.id }} \
+      #     --data '{ "draft": false }'
 
           

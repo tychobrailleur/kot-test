@@ -67,7 +67,7 @@ jobs:
       - name: Publish Release
         uses: tychobrailleur/publish-action@0.1.0
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.RELEASE_TOKEN }}
           release: https://api.github.com/repos/tychobrailleur/kot-test/releases/${{ steps.create_release.outputs.id }}
       # - name: Publish Release
       #   run: |

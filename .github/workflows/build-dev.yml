@@ -77,5 +77,11 @@ jobs:
       #     --header 'User-Agent: Github-Action' \
       #     --url https://api.github.com/repos/tychobrailleur/kot-test/releases/${{ steps.create_release.outputs.id }} \
       #     --data '{ "draft": false }'
+      - name: If 'tag_stable' release, also create 'stable' tag
+        if: ${{ steps.read_version_properties.outputs.tag == 'tag_stable' }}
+        uses: rickstaa/action-create-tag@v1.7.2
+        with:
+          tag: stable
+          tag_exists_error: false
 
           

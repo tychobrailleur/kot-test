@@ -64,11 +64,11 @@ jobs:
           target_commitish: ${{ steps.read_version_properties.outputs.branch }}
           draft: true
           prerelease: true
-      - name: Publish Release
-        uses: tychobrailleur/publish-action@0.1.0
-        with:
-          token: ${{ secrets.RELEASE_TOKEN }}
-          release: https://api.github.com/repos/tychobrailleur/kot-test/releases/${{ steps.create_release.outputs.id }}
+      # - name: Publish Release
+      #   uses: tychobrailleur/publish-action@0.1.0
+      #   with:
+      #     token: ${{ secrets.RELEASE_TOKEN }}
+      #     release: https://api.github.com/repos/tychobrailleur/kot-test/releases/${{ steps.create_release.outputs.id }}
       # - name: Publish Release
       #   run: |
       #     curl --request PATCH \

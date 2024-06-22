@@ -39,7 +39,7 @@ jobs:
           delete_release: true
           tag_name: ${{ steps.read_version_properties.outputs.tag }}
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}      
       - name: Create tag
         uses: actions/github-script@v7
         with:
@@ -47,9 +47,16 @@ jobs:
             github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: 'refs/tags/dev',
+              ref: 'refs/tags/ ${{ steps.read_version_properties.outputs.tag }}',
               sha: context.sha
-            })
+            }).catch(err => {
+              if (err.status !== 422) throw err;
+              github.rest.git.updateRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/ ${{ steps.read_version_properties.outputs.tag }}',
+              sha: context.sha
+            });
       - name: Create a Release
         id: create_release
         uses: softprops/action-gh-release@v1
@@ -64,11 +71,11 @@ jobs:
           target_commitish: ${{ steps.read_version_properties.outputs.branch }}
           draft: true
           prerelease: true
-      # - name: Publish Release
-      #   uses: tychobrailleur/publish-action@0.1.0
-      #   with:
-      #     token: ${{ secrets.RELEASE_TOKEN }}
-      #     release: https://api.github.com/repos/tychobrailleur/kot-test/releases/${{ steps.create_release.outputs.id }}
+      - name: Publish Release
+        uses: tychobrailleur/publish-action@0.1.0
+        with:
+          token: ${{ secrets.RELEASE_TOKEN }}
+          release: https://api.github.com/repos/tychobrailleur/kot-test/releases/${{ steps.create_release.outputs.id }}
       # - name: Publish Release
       #   run: |
       #     curl --request PATCH \
